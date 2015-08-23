@@ -14,4 +14,10 @@ router.get('/', function(req, res){
 	});
 })
 
+router.get('/chat', function(req, res){
+	res.render('chat', {
+		title:'FSE Chat Room'
+	});
+});
+
 module.exports = router;
