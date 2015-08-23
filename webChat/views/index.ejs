@@ -1,3 +1,17 @@
 <% layout('layout') -%>
 
-in index.ejs
+<form class="form-horizontal" method="post" action="">
+	<fieldset>
+		<legend>User Login</legend>
+		<div class="control-group">
+			<label class="control-label" for="username">User name</label>
+			<input type="text" class="input-xlarge" id="username" name="username">
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+		<!--
+		<div class="form-actions">
+			<button type="submit" class="btn btn-primary">Submit</button>
+		</div>
+		-->
+	</fieldset>
+</form>

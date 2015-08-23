@@ -2,8 +2,18 @@
 <html>	
 <head>
 	<title><%= title %></title>
+	<link href="/stylesheets/bootstrap.css" rel="stylesheet"/>
+<style>
+body{padding-top: 60px;padding-bottom: 40px;}
+.container{width:960px;margin:0 auto;}
+</style>
+
 </head>
 <body>
-	<%= body %>
+	<div id="container" class="container">
+		<%- body %>
+	</div>
+<script src = "/javascripts/jquery-2.1.4.min.js"></script>
+<script src = "/javascripts/bootstrap.js"></script>
 </body>
 </html>
