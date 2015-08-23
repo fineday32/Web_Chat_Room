@@ -7,6 +7,10 @@ a {
   color: #00B7FF;
 }
 
+.block-send-message{
+	color: rgb(188, 226, 247);
+}
+
 .button-send{
 	color: #fff;
   	background-color: rgb(36, 142, 238);
