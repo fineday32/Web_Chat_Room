@@ -24,33 +24,22 @@ db2.serialize(function(){
 		db2.run("CREATE TABLE user_chat (thing TEXT)");
 });
 
-router.post('/', function(req, res){
-	
-	// db.run(htmlspecialchars($_POST[$variableName]));
+router.post('/', function(req, res){	
 	console.log('req username : ' + req.body.username);
 	var stmt = db.prepare("INSERT INTO user_name VALUES (?)");
 	stmt.run(req.body.username);
 	stmt.finalize();
 	res.redirect('/chat');
 	res.end();
-	
 });
 
 router.post('/chat', function(req, res){
-	db2.run("UPDATE counts SET value = value + 1 WHERE key = ?", "counter", function(err, row){
-		if (err)
-		{
-			console.err(err);
-			res.status(500);
-		}
-		else
-		{
-			console.log("save user_chat_data to db");
-			res.status(202);
-		}
-		res.redirect('/chat');
-		res.end();
-	});
+	console.log('req user_chat_content : ' + req.body.chat_content);
+	var stmt = db2.prepare("INSERT INTO user_chat VALUES (?)");
+	stmt.run(req.body.chat_content);
+	stmt.finalize();
+	res.redirect('/chat');
+	res.end();
 });
 
 
