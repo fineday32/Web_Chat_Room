@@ -9,23 +9,25 @@ var db = new sqlite3.Database('./user_name.db');
 var db2 = new sqlite3.Database('./user_chat.db');
 var exists1 = fs.existsSync('./user_name.db');
 var exists2 = fs.existsSync('./user_chat.db');
+var nowUser = "";
 
 db.serialize(function(){
 	// db.run("CREATE TABLE IF NOT EXISTS counts (key TEXT, value TEXT)");	
 	// db.run("INSERT INTO counts (key, value) VALUES(?, ?)", "counter", 0);
 	if (!exists1)
-		db.run("CREATE TABLE user_name (thing TEXT)");
+		db.run("CREATE TABLE user_name (name TEXT)");
 });
 
 db2.serialize(function(){
 	// db2.run("CREATE TABLE IF NOT EXISTS counts (key TEXT, value TEXT)");
 	// db2.run("INSERT INTO counts (key, value) VALUES(?, ?)", "counter", 0);
 	if (!exists2)
-		db2.run("CREATE TABLE user_chat (thing TEXT)");
+		db2.run("CREATE TABLE user_chat (name TEXT, content TEXT) ");
 });
 
 router.post('/', function(req, res){	
 	console.log('req username : ' + req.body.username);
+	nowUser = req.body.username;
 	var stmt = db.prepare("INSERT INTO user_name VALUES (?)");
 	stmt.run(req.body.username);
 	stmt.finalize();
@@ -35,8 +37,8 @@ router.post('/', function(req, res){
 
 router.post('/chat', function(req, res){
 	console.log('req user_chat_content : ' + req.body.chat_content);
-	var stmt = db2.prepare("INSERT INTO user_chat VALUES (?)");
-	stmt.run(req.body.chat_content);
+	var stmt = db2.prepare("INSERT INTO user_chat VALUES (?, ?)");
+	stmt.run(nowUser, req.body.chat_content);
 	stmt.finalize();
 	res.redirect('/chat');
 	res.end();
