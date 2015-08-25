@@ -22,7 +22,7 @@ db2.serialize(function(){
 	// db2.run("CREATE TABLE IF NOT EXISTS counts (key TEXT, value TEXT)");
 	// db2.run("INSERT INTO counts (key, value) VALUES(?, ?)", "counter", 0);
 	if (!exists2)
-		db2.run("CREATE TABLE user_chat (name TEXT, content TEXT) ");
+		db2.run("CREATE TABLE user_chat (name TEXT, content TEXT, time TEXT) ");
 });
 
 router.post('/', function(req, res){	
@@ -36,9 +36,22 @@ router.post('/', function(req, res){
 });
 
 router.post('/chat', function(req, res){
-	console.log('req user_chat_content : ' + req.body.chat_content);
-	var stmt = db2.prepare("INSERT INTO user_chat VALUES (?, ?)");
-	stmt.run(nowUser, req.body.chat_content);
+	var stmt = db2.prepare("INSERT INTO user_chat VALUES (?, ?, ?)");
+	
+	//set now's time
+	var date = new Date();
+	var hour =  date.getHours();
+	var tz = "AM";
+	if (hour>=12)
+	{
+		hour -= 12;
+		tz = "PM";
+	}
+	var d = (date.getMonth()+1) + '.' + date.getDate() + '.' + date.getFullYear() + ' ' + hour + ':' + date.getMinutes()  + tz;
+	console.log('req user_chat_content : ' + req.body.chat_content + 
+		'\n' + 'date : ' + d);
+
+	stmt.run(nowUser, req.body.chat_content, d);
 	stmt.finalize();
 	res.redirect('/chat');
 	res.end();
@@ -62,7 +75,7 @@ router.get('/chat', function(req, res){
 	db2.serialize(function(err, row){
 		db2.each('SELECT * FROM user_chat', function(err, row){
 			console.log('posts.push ' + row.name + ' ' + row.content)
-			posts.push({name: row.name, content: row.content});
+			posts.push({name: row.name, content: row.content, time: row.time});
 		}, function(){
 			//All done fetching records, render response
 			res.render('chat', {
