@@ -7,6 +7,21 @@ a {
   color: #00B7FF;
 }
 
+html, body{
+	height: 100%;
+}
+.wrap{
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	/*margin: 0 auto -60px;*/
+}
+
+.push .footer{
+	height: 60px;
+}
+
+
 .block-send-message{
 	color: rgb(188, 226, 247);
 }
@@ -23,7 +38,7 @@ a {
 	/*bottom: 0;*/
 	padding-top: 10px;
 	padding-bottom: 10px;	
-	height:55px;
+	/*height:55px;*/
 	background: rgb(221, 221, 221);
 }
 
