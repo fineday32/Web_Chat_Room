@@ -1,19 +1,18 @@
 <% layout('layout') -%>
-<!--
-<div id="container" class="container">
-</div>
--->
-button
 
 <div class="wrap">
 	<div class="container-fluid">
 		<% posts.forEach(function(post, index){ %>
-			<div class="row">
-			<div class="span4">
-				<h2><%= post.name %></h2>
-				<p><%= post.content %></p>
+			<div class="row chat-content">
+				<div class="col-xs-8 col-sm-9">
+					<h2><%= post.name %></h2>
+					<p><%= post.content %></p>
+				</div>
+				<div class="col-xs-4 col-sm-3">
+					<h3>time</h3>
+				</div>
 			</div>
-			</div>
+			<p class="chat-content-interval"></p>
 		<%}) %>
 	</div>
 </div>
@@ -25,8 +24,8 @@ button
 			<form class="form-horizontal" method="post" action="">
 				<fieldset>
 				<textarea class="form-control" rows="5" name="chat_content" placeholder="Write a message here"></textarea>
-				<div class="bottom-send-message"> 
-					<button type="submit" class="btn button-send middle">Submit
+				<div class="chat-submit-block"> 
+					<button type="submit" class="btn chat-submit-button">Submit
 					</button>
 				</div>
 				</fieldset>
