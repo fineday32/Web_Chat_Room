@@ -58,12 +58,21 @@ router.get('/', function(req, res){
 });
 
 router.get('/chat', function(req, res){
-	res.render('chat', {
-		title:'FSE Chat Room'
-	});
-	// db.get("SELECT value from counts", function(err, row){
-	// 	res.json({"count " : row.value});
-	// });
+	var posts = [];
+	db2.serialize(function(err, row){
+		db2.each('SELECT * FROM user_chat', function(err, row){
+			console.log('posts.push ' + row.name + ' ' + row.content)
+			posts.push({name: row.name, content: row.content});
+		}, function(){
+			//All done fetching records, render response
+			res.render('chat', {
+				title:'FSE Chat Room',
+				posts: posts
+			});
+		});
+		
+	})
+	
 });
 
 

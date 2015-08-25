@@ -1,18 +1,26 @@
 <% layout('layout') -%>
 
-chat.ejs here
-
 <div id="container" class="container">
 button
+
+<% posts.forEach(function(post, index){ %>
+	<div class="row">
+	<div class="span4">
+		<h2><%= post.name %></h2>
+		<p><%= post.content %></p>
+	</div>
+	</div>
+<%}) %>
 
 
 <form class="form-horizontal" method="post" action="">
 	<fieldset>
-	<textarea class="form-control" rows="5" name="chatcontent"></textarea>
+	<textarea class="form-control" rows="5" name="chat_content"></textarea>
 	<div class="bottom-send-message"> 
 		<button type="submit" class="btn button-send middle">Submit
 		</button>
 	</div>
 	</fieldset>
 </form>
+
 </div>
