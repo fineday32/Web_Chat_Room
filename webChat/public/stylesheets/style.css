@@ -30,6 +30,7 @@ html, body{
 .chat-content-username{
 	/*vertical-align: super;*/
 	margin-top: 10px;
+	margin-bottom: 20px;
 	font-weight: bold;
 	color: rgb(120, 120, 120);
 }
@@ -38,6 +39,7 @@ html, body{
 	/*margin-top: 10px;*/
 	padding-top: 5px;
 	color: rgb(130, 130, 130);
+	text-align: right;
 }
 .chat-content-content{
 	/*margin-top: 10px;*/
