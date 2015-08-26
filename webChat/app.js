@@ -4,12 +4,29 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-var http = require('http');
+// var http = require('http');
+// app.set('port', process.env.PORT || 3000);
+// http.createServer(app).listen(app.get('port'), function(req, res){
+//   console.log('Express server listening on port ' + app.get('port'));
+// });
+
+var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+
+io.on('connection', function(socket){
+  console.log('a user connected');
+})
+
+http.listen(3000, function(){
+  console.log('listening on *: 3000');
+})
+
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
-var app = express();
+
 
 // view engine setup
 var engine = require('ejs-locals');
@@ -62,10 +79,6 @@ app.use(function(err, req, res, next) {
   });
 });
 
-app.set('port', process.env.PORT || 3000);
-http.createServer(app).listen(app.get('port'), function(req, res){
-  console.log('Express server listening on port ' + app.get('port'));
-});
 
 
 module.exports = app;
