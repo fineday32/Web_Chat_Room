@@ -47,6 +47,21 @@
 		return false;
 	});
 	socket.on('chat message', function(msg){
+		console.log('msg = ' + msg);
+
     	$('#add-chat-content-block').append($('<li>').text(msg));
+    	$('#add-chat-content-block').append(
+    		'<div class="row chat-content-block">'+
+    			'<div class="col-xs-8 col-sm-9">'+
+					'<h3 class="chat-content-username">name</h3>'+
+					'<h4 class="chat-content-content">' + msg + '</h4>'+
+				'</div>'+
+				'<div class="col-xs-4 col-sm-3">'+
+					'<h5 class="chat-content-time">time</h5>'+
+				'</div>'+
+			'</div>'+
+			'<p class="chat-content-interval"></p>'
+    	);
+
   	});
 </script>

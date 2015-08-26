@@ -25,3 +25,19 @@ db.serialize(function(){
 	})
 	db.close();
 });
+
+
+var add = 
+    		'<div class="row chat-content-block">'+
+				'<div class="col-xs-8 col-sm-9">'+
+					'<h3 class="chat-content-username">name</h3>'+
+					'<h4 class="chat-content-content">content</h4>'+
+				'</div>'+
+				'<div class="col-xs-4 col-sm-3">'+
+					'<h5 class="chat-content-time"><%= post.time %></h5>'+
+				'</div>'+
+			'</div>'+
+			'<p class="chat-content-interval"></p>';
+		console.log('add is ' + add);
+		$('#add-chat-content-block').append($('<li>').text(msg));
+    	$('#add-chat-content-block').append(add);
