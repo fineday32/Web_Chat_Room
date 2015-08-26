@@ -14,7 +14,7 @@
 			</div>
 			<p class="chat-content-interval"></p>
 		<%}) %>
-		<div class="add-chat-content-block"></div>
+		<div id="add-chat-content-block"></div>
 	</div>
 </div>
 
@@ -46,4 +46,7 @@
 		$('#chat_content').val('');
 		return false;
 	});
+	socket.on('chat message', function(msg){
+    	$('#add-chat-content-block').append($('<li>').text(msg));
+  	});
 </script>
