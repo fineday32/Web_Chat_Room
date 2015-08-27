@@ -28,7 +28,7 @@ db2.serialize(function(){
 
 router.post('/', function(req, res){	
 	console.log('req username : ' + req.body.username);
-	
+
 	var stmt = db.prepare("INSERT INTO user_name VALUES (?, ?)");
 	stmt.run(req.body.username, id+1);
 	stmt.finalize();
@@ -82,7 +82,7 @@ router.get('/chat', function(req, res){
 	var callback_content = u.query['content'];
 	// console.log('callback_content: ' + callback_content);
 	if (typeof(callback_content)!=="undefined")
-		db2.run(add_todo, nowUser, u.query['content'], u.query['time']);
+		db2.run(add_todo, u.query['name'], u.query['content'], u.query['time']);
 	
 	var posts = [];
 	db2.serialize(function(err, row){

@@ -54,31 +54,31 @@
 		var d = (date.getMonth()+1) + '.' + date.getDate() + '.' + date.getFullYear() + ' ' + hour + ':' + date.getMinutes()  + tz;
 		// console.log('req user_chat_content : ' + req.body.chat_content + '\n' + 'date : ' + d);
 
-		
+
 		$.ajax({
-			url: "http://localhost:3000/chat?callback=?",
+			url: "/chat?callback=?",
 			type: "GET",
-			data: {"content": $('#chat_content').val(), "time": d},
+			data: {"name": sessionStorage['username'], "content": $('#chat_content').val(), "time": d},
 			dataType: "jsonp", 
 			success: function(){
 				console.log("ajax success");
 			}
 		});
-		
+
 
 		console.log('chat_content is ' + $('#chat_content').val());
-		socket.emit('chat message', $('#chat_content').val(), d);
+		socket.emit('chat message', sessionStorage['username'], $('#chat_content').val(), d);
 		$('#chat_content').val('');
 		return false;
 	});
-	socket.on('chat message', function(msg, d){
+	socket.on('chat message', function(username, msg, d){
 		console.log('msg = ' + msg);
 
     	<!--$('#add-chat-content-block').append($('<li>').text(msg));-->
     	$('#add-chat-content-block').append(
     		'<div class="row chat-content-block">'+
     			'<div class="col-xs-8 col-sm-9">'+
-					'<h3 class="chat-content-username">name</h3>'+
+					'<h3 class="chat-content-username">' + username + '</h3>'+
 					'<h4 class="chat-content-content">' + msg + '</h4>'+
 				'</div>'+
 				'<div class="col-xs-4 col-sm-3">'+

@@ -10,3 +10,12 @@
 		</div>
 	</fieldset>
 </form>
+
+<script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+<script>
+	$('form').submit(function(){
+		sessionStorage.setItem('username', $('#username').val());
+		console.log('log in store username: ' + $('#username').val());
+	});
+
+</script>
