@@ -10,12 +10,13 @@ var db2 = new sqlite3.Database('./user_chat.db');
 var exists1 = fs.existsSync('./user_name.db');
 var exists2 = fs.existsSync('./user_chat.db');
 var nowUser = "";
+var id = 1;
 
 db.serialize(function(){
 	// db.run("CREATE TABLE IF NOT EXISTS counts (key TEXT, value TEXT)");	
 	// db.run("INSERT INTO counts (key, value) VALUES(?, ?)", "counter", 0);
 	if (!exists1)
-		db.run("CREATE TABLE user_name (name TEXT)");
+		db.run("CREATE TABLE user_name (name TEXT, id INTEGER)");
 });
 
 db2.serialize(function(){
@@ -27,9 +28,9 @@ db2.serialize(function(){
 
 router.post('/', function(req, res){	
 	console.log('req username : ' + req.body.username);
-	nowUser = req.body.username;
-	var stmt = db.prepare("INSERT INTO user_name VALUES (?)");
-	stmt.run(req.body.username);
+	
+	var stmt = db.prepare("INSERT INTO user_name VALUES (?, ?)");
+	stmt.run(req.body.username, id+1);
 	stmt.finalize();
 	res.redirect('/chat');
 	res.end();
@@ -77,21 +78,11 @@ router.get('/chat', function(req, res){
 	u = url.parse(req.url, true);
 	console.log('u: ' + u + ' u.query[]: ' + u.query['description']);
 	
-	//set now's time
-	var date = new Date();
-	var hour =  date.getHours();
-	var tz = "AM";
-	if (hour>=12)
-	{
-		hour -= 12;
-		tz = "PM";
-	}
-	var d = (date.getMonth()+1) + '.' + date.getDate() + '.' + date.getFullYear() + ' ' + hour + ':' + date.getMinutes()  + tz;
-	// console.log('req user_chat_content : ' + req.body.chat_content + '\n' + 'date : ' + d);
+	
 	var callback_content = u.query['description'];
-	console.log('callback_content: ' + callback_content);
+	// console.log('callback_content: ' + callback_content);
 	if (typeof(callback_content)!=="undefined")
-		db2.run(add_todo, nowUser, u.query['description'], d);
+		db2.run(add_todo, nowUser, u.query['description'], 0);
 	
 	var posts = [];
 	db2.serialize(function(err, row){

@@ -52,12 +52,25 @@
 			}
 		});
 
+		//set now's time
+		var date = new Date();
+		var hour =  date.getHours();
+		var tz = "AM";
+		if (hour>=12)
+		{
+			hour -= 12;
+			tz = "PM";
+		}
+		var d = (date.getMonth()+1) + '.' + date.getDate() + '.' + date.getFullYear() + ' ' + hour + ':' + date.getMinutes()  + tz;
+		// console.log('req user_chat_content : ' + req.body.chat_content + '\n' + 'date : ' + d);
+
+
 		console.log('chat_content is ' + $('#chat_content').val());
-		socket.emit('chat message', $('#chat_content').val());
+		socket.emit('chat message', $('#chat_content').val(), d);
 		$('#chat_content').val('');
 		return false;
 	});
-	socket.on('chat message', function(msg){
+	socket.on('chat message', function(msg, d){
 		console.log('msg = ' + msg);
 
     	<!--$('#add-chat-content-block').append($('<li>').text(msg));-->
@@ -68,7 +81,7 @@
 					'<h4 class="chat-content-content">' + msg + '</h4>'+
 				'</div>'+
 				'<div class="col-xs-4 col-sm-3">'+
-					'<h5 class="chat-content-time">time</h5>'+
+					'<h5 class="chat-content-time">' + d + '</h5>'+
 				'</div>'+
 			'</div>'+
 			'<p class="chat-content-interval"></p>'
