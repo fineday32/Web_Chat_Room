@@ -25,6 +25,37 @@ io.on('connection', function(socket){
   });
 });
 
+// var sqlite3 = require('sqlite3').verbose();
+// var url = require('url');
+// var db2 = new sqlite3.Database('./user_chat1.db');
+// var fs = require('fs');
+// var exists2 = fs.existsSync('./user_chat1.db');
+// db2.serialize(function(){
+//   // db2.run("CREATE TABLE IF NOT EXISTS counts (key TEXT, value TEXT)");
+//   // db2.run("INSERT INTO counts (key, value) VALUES(?, ?)", "counter", 0);
+//   if (!exists2)
+//     db2.run("CREATE TABLE user_chat1 (content TEXT) ");
+//     // db2.run("CREATE TABLE user_chat (name TEXT, content TEXT, time TEXT) ");
+// });
+
+// var add_todo = "INSERT INTO user_chat1 VALUES (?)";
+// app.get('/chat', function(req, res){
+//   u=url.parse(req.url, true);
+//   // res.writeHead(200, {'Content-Type': 'application/json'});
+//   // if (u.path==)
+//   console.log('u: ' + u + ' u.query[]: ' + u.query['description']);
+//   if (typeof u.query['description']!=='undefined')
+//   {
+//       db2.run(add_todo, u.query['description']);
+//       db2.get('SELECT last_insert_rowid() as id', function(err, row){
+//           res.end(u.query['callback'] + "({ msg: 'success', id: '" + row['id'] + "'})");
+//           console.log("New Todo: " + u.query['description']); 
+//       });
+//   }
+  
+// });
+
+
 http.listen(3000, function(){
   console.log('listening on *: 3000');
 });

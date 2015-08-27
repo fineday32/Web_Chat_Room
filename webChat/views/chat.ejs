@@ -41,6 +41,17 @@
 <script>
 	var socket = io();
 	$('form').submit(function(){
+
+		$.ajax({
+			url: "http://localhost:3000/chat?callback=?",
+			type: "GET",
+			data: {"description": $('#chat_content').val()},
+			dataType: "jsonp", 
+			success: function(){
+				console.log("ajax success");
+			}
+		});
+
 		console.log('chat_content is ' + $('#chat_content').val());
 		socket.emit('chat message', $('#chat_content').val());
 		$('#chat_content').val('');
@@ -49,7 +60,7 @@
 	socket.on('chat message', function(msg){
 		console.log('msg = ' + msg);
 
-    	$('#add-chat-content-block').append($('<li>').text(msg));
+    	<!--$('#add-chat-content-block').append($('<li>').text(msg));-->
     	$('#add-chat-content-block').append(
     		'<div class="row chat-content-block">'+
     			'<div class="col-xs-8 col-sm-9">'+

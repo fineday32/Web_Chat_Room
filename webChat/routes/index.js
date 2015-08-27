@@ -35,9 +35,9 @@ router.post('/', function(req, res){
 	res.end();
 });
 
+/*
 router.post('/chat', function(req, res){
 	var stmt = db2.prepare("INSERT INTO user_chat VALUES (?, ?, ?)");
-	
 	//set now's time
 	var date = new Date();
 	var hour =  date.getHours();
@@ -56,7 +56,7 @@ router.post('/chat', function(req, res){
 	res.redirect('/chat');
 	res.end();
 });
-
+*/
 
 /* GET home page. */
 // router.get('/', function(req, res, next) {
@@ -70,7 +70,29 @@ router.get('/', function(req, res){
 
 });
 
+var url = require('url');
+var add_todo = "INSERT INTO user_chat VALUES (?, ?, ?)";
 router.get('/chat', function(req, res){
+
+	u = url.parse(req.url, true);
+	console.log('u: ' + u + ' u.query[]: ' + u.query['description']);
+	
+	//set now's time
+	var date = new Date();
+	var hour =  date.getHours();
+	var tz = "AM";
+	if (hour>=12)
+	{
+		hour -= 12;
+		tz = "PM";
+	}
+	var d = (date.getMonth()+1) + '.' + date.getDate() + '.' + date.getFullYear() + ' ' + hour + ':' + date.getMinutes()  + tz;
+	// console.log('req user_chat_content : ' + req.body.chat_content + '\n' + 'date : ' + d);
+	var callback_content = u.query['description'];
+	console.log('callback_content: ' + callback_content);
+	if (typeof(callback_content)!=="undefined")
+		db2.run(add_todo, nowUser, u.query['description'], d);
+	
 	var posts = [];
 	db2.serialize(function(err, row){
 		db2.each('SELECT * FROM user_chat', function(err, row){
@@ -81,6 +103,7 @@ router.get('/chat', function(req, res){
 			res.render('chat', {
 				title:'FSE Chat Room',
 				posts: posts
+				,nowUser: nowUser
 			});
 		});
 		
