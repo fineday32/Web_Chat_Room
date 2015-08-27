@@ -79,10 +79,10 @@ router.get('/chat', function(req, res){
 	console.log('u: ' + u + ' u.query[]: ' + u.query['description']);
 	
 	
-	var callback_content = u.query['description'];
+	var callback_content = u.query['content'];
 	// console.log('callback_content: ' + callback_content);
 	if (typeof(callback_content)!=="undefined")
-		db2.run(add_todo, nowUser, u.query['description'], 0);
+		db2.run(add_todo, nowUser, u.query['content'], u.query['time']);
 	
 	var posts = [];
 	db2.serialize(function(err, row){

@@ -42,16 +42,6 @@
 	var socket = io();
 	$('form').submit(function(){
 
-		$.ajax({
-			url: "http://localhost:3000/chat?callback=?",
-			type: "GET",
-			data: {"description": $('#chat_content').val()},
-			dataType: "jsonp", 
-			success: function(){
-				console.log("ajax success");
-			}
-		});
-
 		//set now's time
 		var date = new Date();
 		var hour =  date.getHours();
@@ -64,6 +54,17 @@
 		var d = (date.getMonth()+1) + '.' + date.getDate() + '.' + date.getFullYear() + ' ' + hour + ':' + date.getMinutes()  + tz;
 		// console.log('req user_chat_content : ' + req.body.chat_content + '\n' + 'date : ' + d);
 
+		
+		$.ajax({
+			url: "http://localhost:3000/chat?callback=?",
+			type: "GET",
+			data: {"content": $('#chat_content').val(), "time": d},
+			dataType: "jsonp", 
+			success: function(){
+				console.log("ajax success");
+			}
+		});
+		
 
 		console.log('chat_content is ' + $('#chat_content').val());
 		socket.emit('chat message', $('#chat_content').val(), d);
